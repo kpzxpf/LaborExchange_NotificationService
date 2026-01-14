@@ -7,3 +7,4 @@ spring:
     consumer:
       group-id: notification-group
     topics:
+      application-topic: application-event
