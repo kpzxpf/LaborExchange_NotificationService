@@ -7,4 +7,31 @@ spring:
     consumer:
       group-id: notification-group
     topics:
-      application-topic: application-event
+      new-topic: NEW
+      rejected-topic: REJECTED
+      withdrawn-topic: WITHDRAWN
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: nikitavolzin55@gmail.com
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  app:
+    notifications:
+      templates:
+        NEW_APPLICATION:
+          subject: "Новый отклик на вакансию"
+          body: "На вашу вакансию '%s' пришел новый отклик."
+        REJECTED_APPLICATION:
+          subject: "Статус вашей заявки изменен"
+          body: "Уважаемый кандидат, ваша заявка на вакансию '%s' была отклонена."
+        WITHDRAWN_APPLICATION:
+          subject: "Кандидат отозвал заявку"
+          body: "Заявка на вакансию '%s' была отозвана отправителем."
