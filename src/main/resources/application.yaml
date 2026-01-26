@@ -2,6 +2,9 @@ server:
   port: 8086
 
 spring:
+  application:
+     name: notification-service
+
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
@@ -22,6 +25,12 @@ spring:
           auth: true
           starttls:
             enable: true
+
+  logging:
+    level:
+      org.springframework.cloud.gateway: INFO
+      com.vlz: DEBUG
+
 
   app:
     notifications:

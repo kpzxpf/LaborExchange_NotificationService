@@ -14,8 +14,12 @@ import java.util.Map;
 public class KafkaTopicConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
-    @Value("${spring.kafka.topics.user-registration}")
-    private String newPostTopicName;
+    @Value("${spring.kafka.topics.new-topic}")
+    private String newApplicationTopicName;
+    @Value("${spring.kafka.topics.rejected-topic}")
+    private String rejectedTopicName;
+    @Value("${spring.kafka.topics.withdrawn-topic}")
+    private String withdrawTopicName;
 
     @Bean
     public KafkaAdmin kafkaAdmin() {
@@ -25,7 +29,17 @@ public class KafkaTopicConfig {
     }
 
     @Bean
-    public NewTopic userRegisterTopic() {
-        return new NewTopic(newPostTopicName, 1, (short) 1);
+    public NewTopic newApplicationTopic() {
+        return new NewTopic(newApplicationTopicName, 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic rejectedTopic() {
+        return new NewTopic(rejectedTopicName, 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic withdrawTopic() {
+        return new NewTopic(withdrawTopicName, 1, (short) 1);
     }
 }

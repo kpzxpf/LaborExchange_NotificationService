@@ -26,6 +26,7 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind")
     annotationProcessor("org.projectlombok:lombok")
     compileOnly("org.projectlombok:lombok")
+    implementation("com.github.loki4j:loki-logback-appender:1.5.0")
     implementation("org.springframework.boot:spring-boot-starter-mail")
 }
 
