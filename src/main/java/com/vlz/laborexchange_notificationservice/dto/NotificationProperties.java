@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "app.notifications")
+@ConfigurationProperties(prefix = "spring.app.notifications")
 public class NotificationProperties {
     private Map<NotificationType, Template> templates;
 
