@@ -28,6 +28,8 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     implementation("com.github.loki4j:loki-logback-appender:1.5.0")
     implementation("org.springframework.boot:spring-boot-starter-mail")
+    implementation("org.springframework.retry:spring-retry")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
 }
 
 tasks.withType<Test> {

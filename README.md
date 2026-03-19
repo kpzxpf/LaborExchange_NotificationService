@@ -411,6 +411,5 @@ curl http://localhost:8086/actuator/health
 
 <div align="center">
 
-**Made with ❤️ by the LaborExchange Team**
 
 </div>
