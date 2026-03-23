@@ -13,11 +13,20 @@ spring:
       new-topic: NEW
       rejected-topic: REJECTED
       withdrawn-topic: WITHDRAWN
+      accepted-topic: ACCEPTED
+      email-verification: email-verification
+      password-reset: password-reset
+      job-alert: job-alert
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
 
   mail:
     host: smtp.gmail.com
     port: 587
-    username: nikitavolzin55@gmail.com
+    username: ${MAIL_USERNAME:nikitavolzin55@gmail.com}
     password: ${MAIL_PASSWORD}
     properties:
       mail:
@@ -25,12 +34,6 @@ spring:
           auth: true
           starttls:
             enable: true
-
-  logging:
-    level:
-      org.springframework.cloud.gateway: INFO
-      com.vlz: DEBUG
-
 
   app:
     notifications:
@@ -44,3 +47,39 @@ spring:
         WITHDRAWN_APPLICATION:
           subject: "Кандидат отозвал заявку"
           body: "Заявка на вакансию '%s' была отозвана отправителем."
+        ACCEPTED_APPLICATION:
+          subject: "Ваша заявка принята!"
+          body: "Поздравляем! Ваша заявка на вакансию '%s' была принята."
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    com.vlz: DEBUG
+
+app:
+  frontend-url: ${FRONTEND_URL:http://localhost:3000}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://${ZIPKIN_HOST:localhost}:9411/api/v2/spans
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+    display-request-duration: true
+  api-docs:
+    path: /v3/api-docs

@@ -13,12 +13,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RejectedApplicationEvent implements NotificationEvent {
     private Long applicationId;
+    private Long candidateId;
     private String candidateEmail;
     private String vacancyTitle;
 
     @Override
     public String getRecipientEmail() {
         return candidateEmail;
+    }
+
+    @Override
+    public Long getRecipientUserId() {
+        return candidateId;
     }
 
     @Override

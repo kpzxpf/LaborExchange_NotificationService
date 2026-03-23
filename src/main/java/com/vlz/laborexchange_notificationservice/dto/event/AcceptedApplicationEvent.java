@@ -11,25 +11,25 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NewApplicationEvent implements NotificationEvent {
+public class AcceptedApplicationEvent implements NotificationEvent {
     private Long applicationId;
-    private Long employerId;
-    private String employerEmail;
+    private Long candidateId;
+    private String candidateEmail;
     private String vacancyTitle;
 
     @Override
     public String getRecipientEmail() {
-        return employerEmail;
+        return candidateEmail;
     }
 
     @Override
     public Long getRecipientUserId() {
-        return employerId;
+        return candidateId;
     }
 
     @Override
     public NotificationType getTypeCode() {
-        return NotificationType.NEW_APPLICATION;
+        return NotificationType.ACCEPTED_APPLICATION;
     }
 
     @Override

@@ -20,6 +20,10 @@ public class KafkaTopicConfig {
     private String rejectedTopicName;
     @Value("${spring.kafka.topics.withdrawn-topic}")
     private String withdrawTopicName;
+    @Value("${spring.kafka.topics.accepted-topic}")
+    private String acceptedTopicName;
+    @Value("${spring.kafka.topics.job-alert}")
+    private String jobAlertTopicName;
 
     @Bean
     public KafkaAdmin kafkaAdmin() {
@@ -41,5 +45,15 @@ public class KafkaTopicConfig {
     @Bean
     public NewTopic withdrawTopic() {
         return new NewTopic(withdrawTopicName, 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic acceptedTopic() {
+        return new NewTopic(acceptedTopicName, 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic jobAlertTopic() {
+        return new NewTopic(jobAlertTopicName, 1, (short) 1);
     }
 }

@@ -13,12 +13,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WithdrawnApplicationEvent implements NotificationEvent {
     private Long applicationId;
+    private Long employerId;
     private String employerEmail;
     private String vacancyTitle;
 
     @Override
     public String getRecipientEmail() {
         return employerEmail;
+    }
+
+    @Override
+    public Long getRecipientUserId() {
+        return employerId;
     }
 
     @Override
