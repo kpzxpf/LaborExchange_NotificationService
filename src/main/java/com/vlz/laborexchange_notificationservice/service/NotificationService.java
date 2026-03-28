@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vlz.laborexchange_notificationservice.dto.JobAlertEvent;
 import com.vlz.laborexchange_notificationservice.dto.NotificationEvent;
 import com.vlz.laborexchange_notificationservice.dto.NotificationProperties;
+import com.vlz.laborexchange_notificationservice.entity.Notification;
+import com.vlz.laborexchange_notificationservice.repository.NotificationRepository;
 import com.vlz.laborexchange_notificationservice.sse.SseEmitterRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +23,29 @@ public class NotificationService {
     private final NotificationProperties properties;
     private final SseEmitterRegistry sseEmitterRegistry;
     private final ObjectMapper objectMapper;
+    private final NotificationRepository notificationRepository;
 
     public void notify(NotificationEvent event) {
-        createEmail(event);
         pushSse(event);
+        persist(event);
+        createEmail(event);
+    }
+
+    private void persist(NotificationEvent event) {
+        if (event.getRecipientUserId() == null) return;
+        NotificationProperties.Template template = properties.getTemplates().get(event.getTypeCode());
+        String message = template != null
+                ? formatSafe(template.getBody(), event.getBodyArgs())
+                : event.getTypeCode().name();
+        try {
+            notificationRepository.save(Notification.builder()
+                    .userId(event.getRecipientUserId())
+                    .type(event.getTypeCode())
+                    .message(message)
+                    .build());
+        } catch (Exception e) {
+            log.error("Failed to persist notification for userId={}: {}", event.getRecipientUserId(), e.getMessage());
+        }
     }
 
     public void createEmail(NotificationEvent event) {
